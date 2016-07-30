@@ -7,6 +7,9 @@
 
 -behaviour(gen_server).
 
+-record(state, {
+}).
+
 -export([start_link/0]).
 -export([init/1,
          handle_call/3,
@@ -19,7 +22,7 @@ start_link() ->
     gen_server:start_link({local, ?MODULE}, ?MODULE, [], []).
 
 init([]) ->
-    {ok, undefined}.
+    {ok, #state{}}.
 
 handle_call(_Event, _From, State) ->
     {reply, ok, State}.
