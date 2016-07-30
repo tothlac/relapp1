@@ -8,6 +8,8 @@
 -behaviour(gen_server).
 
 -record(state, {
+    id  :: non_neg_integer(),
+    name = undefined :: undefined | binary()
 }).
 
 -export([start_link/0]).
@@ -22,7 +24,8 @@ start_link() ->
     gen_server:start_link({local, ?MODULE}, ?MODULE, [], []).
 
 init([]) ->
-    {ok, #state{}}.
+    {ok, #state{id = 0,
+                name = <<"name">>}}.
 
 handle_call(_Event, _From, State) ->
     {reply, ok, State}.
