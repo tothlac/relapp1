@@ -1,6 +1,6 @@
 {application, relapp,
  [{description, "An OTP application"},
-  {vsn, "1.0.7"},
+  {vsn, "1.0.8"},
   {registered, []},
   {mod, { relapp_app, []}},
   {applications,
