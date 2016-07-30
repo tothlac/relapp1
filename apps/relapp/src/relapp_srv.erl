@@ -9,7 +9,7 @@
 
 -record(state, {
     id  :: non_neg_integer(),
-    description = undefined :: undefined | binary(),
+    description_id :: non_neg_integer(),
     name = undefined :: undefined | binary()
 }).
 
@@ -26,7 +26,7 @@ start_link() ->
 
 init([]) ->
     {ok, #state{id = 0,
-                description = <<"description">>,
+                description_id = 1,
                 name = <<"name">>}}.
 
 handle_call(_Event, _From, State) ->
