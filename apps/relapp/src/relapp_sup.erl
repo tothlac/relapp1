@@ -31,7 +31,9 @@ helper_method() -> ok.
 
 %% Child :: {Id,StartFunc,Restart,Shutdown,Type,Modules}
 init([]) ->
-    {ok, { {one_for_all, 0, 1}, []} }.
+    {ok, { {one_for_all, 0, 1},
+            [{relapp_srv, {relapp_srv, start_link, []},
+             transient, 5000, worker, [relapp_srv]}]} }.
 
 %%====================================================================
 %% Internal functions
