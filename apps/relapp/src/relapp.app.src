@@ -5,8 +5,7 @@
   {mod, { relapp_app, []}},
   {applications,
    [kernel,
-    stdlib,
-    parse_trans
+    stdlib
    ]},
   {env,[]},
   {modules, []},
