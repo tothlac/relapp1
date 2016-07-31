@@ -33,7 +33,10 @@ helper_method() -> ok.
 init([]) ->
     {ok, { {one_for_all, 0, 1},
             [{relapp_srv, {relapp_srv, start_link, []},
-             transient, 5000, worker, [relapp_srv]}]} }.
+              transient, 5000, worker, [relapp_srv]},
+             {relapp_srv2, {relapp_srv2, start_link, []},
+              transient, 5000, worker, [relapp_srv2]}
+         ]}}.
 
 %%====================================================================
 %% Internal functions
