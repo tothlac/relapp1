@@ -13,7 +13,9 @@
     name = undefined :: undefined | binary()
 }).
 
--export([start_link/0]).
+-export([start_link/0,
+         test/1]).
+
 -export([init/1,
          handle_call/3,
          handle_cast/2,
@@ -24,11 +26,17 @@
 start_link() ->
     gen_server:start_link({local, ?MODULE}, ?MODULE, [], []).
 
+test(Arg) ->
+    gen_server:call(?MODULE, {test, Arg}).
+
 init([]) ->
     {ok, #state{id = 0,
                 description_id = 1,
                 name = <<"name">>}}.
 
+handle_call({test, Arg}, _From, State) ->
+    Ret = relapp_m1:test(Arg),
+    {reply, Ret, State};
 handle_call(_Event, _From, State) ->
     {reply, ok, State}.
 

@@ -1,5 +1,5 @@
 -module(relapp_m1).
 
--export([test/0]).
+-export([test/1]).
 
-test() -> ok.
+test(Arg) -> {ok, Arg}.
