@@ -31,6 +31,7 @@
 start_link() ->
     gen_server:start_link({local, ?MODULE}, ?MODULE, [], []).
 
+set_state(undefined) -> {error, no_state};
 set_state(State) ->
     ok = gen_server:call(?MODULE, {set_state, State}).
 

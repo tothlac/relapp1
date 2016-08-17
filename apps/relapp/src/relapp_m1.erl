@@ -3,6 +3,7 @@
 -export([test/1,
          store_fun/0]).
 
+test(undefined) -> {error, no_arg};
 test(Arg) -> {ok, Arg}.
 
 store_fun() ->
