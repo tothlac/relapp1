@@ -9,15 +9,14 @@
 
 -record(state, {
     id  :: non_neg_integer(),
-    description_id :: non_neg_integer(),
     name = undefined :: undefined | binary(),
-    extra = undefined :: undefined | binary()
+    extra = undefined :: undefined | {atom(), non_neg_integer()}
 }).
+%% declare the record that holds the state for this gen_server
+-state_record(state).
 
 -export([start_link/0,
          test/1,
-         set_description_id/1,
-         get_description_id/0,
          get_extra/0]).
 
 -export([init/1,
@@ -34,29 +33,16 @@ test(undefined) -> ok;
 test(Arg) ->
     gen_server:call(?MODULE, {test, Arg}).
 
-set_description_id(Arg) ->
-    gen_server:call(?MODULE, {set_description_id, Arg}).
-
-get_description_id() ->
-    gen_server:call(?MODULE, get_description_id).
-
 get_extra() ->
     gen_server:call(?MODULE, get_extra).
 
 init([]) ->
     {ok, #state{id = 0,
-                description_id = 1,
                 name = <<"name">>}}.
 
 handle_call({test, Arg}, _From, State) ->
     Ret = relapp_m1:test(Arg),
     {reply, Ret, State};
-handle_call({set_description_id, Arg}, _From, State) ->
-    {reply, ok,
-     State#state{description_id = Arg}};
-handle_call(get_description_id, _From,
-            #state{description_id = DescriptionId} = State) ->
-    {reply, {ok, DescriptionId}, State};
 handle_call(get_extra, _From, State) ->
     {reply, State#state.extra, State};
 handle_call(_Event, _From, State) ->
@@ -71,5 +57,30 @@ handle_info(_Info, State) ->
 terminate(_Reason, _State) ->
     ok.
 
-code_change(_OldVsn, State, _Extra) ->
-    {ok, State}.
+code_change("1.0.9", State, _Extra) ->
+    {ok, State};
+code_change({down, "1.0.9"}, State, _Extra) ->
+    {ok, State};
+code_change({down, _OldVsn}, State0, Extra) ->
+    %% since the state record has already been
+    %% converted behind the scenes,
+    %% the State var is already the new one, obtain the
+    %% old state from the extra variable
+    OldState = proplists:get_value(old_state, Extra),
+    %% extract the extra argument
+    {_, DescriptionId} = erlang:element(4, OldState),
+    %% and set it in the new state
+    State = erlang:setelement(3, State0, DescriptionId),
+    {ok, State};
+code_change(_OldVsn, State, Extra) ->
+    %% since the state record has already been
+    %% converted behind the scenes,
+    %% the State var is already the new one, obtain the
+    %% old state from the extra variable
+    OldState = proplists:get_value(old_state, Extra),
+    %% extract the value of the description id field
+    %% from the old state
+    DescriptionId = erlang:element(3, OldState),
+    Arg = proplists:get_value(arg, Extra),
+    ExtraArg = {Arg, DescriptionId},
+    {ok, State#state{extra = ExtraArg}}.
