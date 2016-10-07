@@ -1,27 +1,8 @@
-Version = "1.0.19",
-{Version,
+{"{{vsn}}",
     [
-     {"1.0.17",
-        [{update,relapp_srv,
-            {advanced, []},
-            brutal_purge,brutal_purge,[]}]
-     },
-     {"1.0.18",
-        [{update,relapp_srv,
-            {advanced, [{arg, upgrade}]},
-            brutal_purge,brutal_purge,[]}]
-     }
+     {<<".*">>, [{restart_application, relapp}]}
     ],
     [
-     {"1.0.17",
-        [{update,relapp_srv,
-            {advanced, []},
-            brutal_purge,brutal_purge,[]}]
-     },
-     {"1.0.18",
-        [{update,relapp_srv,
-            {advanced, [{arg, downgrade}]},
-            brutal_purge,brutal_purge,[]}]
-     }
+     {<<".*">>, [{restart_application, relapp}]}
     ]
 }.
