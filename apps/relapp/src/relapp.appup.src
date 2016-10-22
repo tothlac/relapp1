@@ -1,3 +1,6 @@
+%% find our app info in rebar's STATE
+AppInfo = rebar3_appup_utils:find_app_info(<<"relapp">>, STATE),
+"{{vsn}}" = rebar_app_info:original_vsn(AppInfo),
 {"{{vsn}}",
     [
      {<<".*">>, [{restart_application, relapp}]}
