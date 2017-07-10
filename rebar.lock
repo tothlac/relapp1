@@ -1,8 +1,14 @@
-[{<<"parse_trans">>,
+{"1.1.0",
+[{<<"granderl">>,{pkg,<<"granderl">>,<<"0.1.5">>},1},
+ {<<"parse_trans">>,
   {git,"git://github.com/uwiger/parse_trans",
        {ref,"6f3645afb43c7c57d61b54ef59aecab288ce1013"}},
   0},
  {<<"statsderl">>,
   {git,"https://github.com/lpgauth/statsderl.git",
-       {ref,"8d284189f398bffd0fa3dec7a4b46460a061b158"}},
-  0}].
+       {ref,"d660959a2e1d95b25c24df6517a859bd23c14ac0"}},
+  0}]}.
+[
+{pkg_hash,[
+ {<<"granderl">>, <<"F20077A68BD80B8D8783BD15A052813C6483771DEC1A5B837D307CBE92F14122">>}]}
+].
